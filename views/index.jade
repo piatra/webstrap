@@ -1,0 +1,51 @@
+extends layout
+
+block content
+	.hero-unit
+		h1= title
+		p Welcome to #{title} it's a fast and easy way to get started with your projects
+		p Webstrap is a tool that allows you to get all the components you need for your next project in just one place
+		
+	.extend-y
+		h2 About
+
+	.container
+		.row
+			.span4
+				ul
+					h3	Components
+					li
+						input(type='checkbox', id='h5bp', checked)
+						label(for='h5bp') HTML5 Boilerplate
+					li
+						input(type='checkbox', id='bootstrap')
+						label(for='bootstrap') Twitter Bootstrap
+							span(class='label label-info') 2.1.0
+					li
+						input(type='checkbox', id='jquery')
+						label(for='jquery') jQuery
+							span(class='label label-info') 1.8.0
+					li
+						input(type='checkbox', id='requirejs')
+						label(for='requirejs') RequireJS
+							span(class='label label-info') 2.0.6
+					li
+						input(type='checkbox', id='backbone')
+						label(for='backbone') Backbone
+			.span8
+				h3 Description
+				#description
+
+		.row
+			.span12
+				#download.btn.btn-primary.btn-large
+					i(class='icon-download icon-white')
+					| Download
+		.row
+			.span12
+				p.pull-right Inspired by 
+					a(href='http://yeoman.io/'): em yeoman.io 
+					| and 
+					a(href='http://twitter.github.com/bootstrap/') Twitter Bootstrap 
+					| built with 
+					a(href='nodejs.org') nodejs
