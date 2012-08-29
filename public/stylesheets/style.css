@@ -1,21 +1,19 @@
-body {
-  padding: 20px;
-}
 .hero-unit {
   background: #d8bfd8 url("../img/hero.png") right repeat;
   color: #fff;
   text-shadow: 0 2px 0 #111;
+  border-radius: 0;
+  margin-bottom: 0;
 }
-a {
-  color: #00b7ff;
+.btn-info a {
+  color: #fff;
 }
 label {
   width: auto;
 }
 .extend-y {
   background: #f5f5f5;
-  margin: 0 -20px;
-  padding: 10px;
+  padding: 5px;
   text-align: center;
 }
 .container ul {
@@ -29,9 +27,10 @@ label {
   padding: 5px;
   margin: 5px;
   border-radius: 5px;
+  position: relative;
 }
 .container ul li .label {
-  float: right;
+  margin-left: 5px;
 }
 .container ul li:hover,
 .container ul li label:hover {
@@ -41,4 +40,18 @@ label {
 .container input[type='checkbox'] {
   float: left;
   margin-right: 0.5em;
+}
+.container input[type='checkbox'] ~ p {
+  display: none;
+}
+.container input[type='checkbox']:checked ~ p,
+.container input[type='checkbox']:checked ~ .extra {
+  display: block;
+}
+.extra {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 0 5px 0 0;
+  display: none;
 }

@@ -1,20 +1,21 @@
 var download = document.querySelector('#download');
 
-var notify = function (component) {
-	$('#description').load('../files/description/' + component + '.html');
-}
-
-$('li').on('hover', function (){
-	notify($(this).children('input').attr('id'));
-});
-
 var downloadWebstrap = function () {
 	
 	var inputs = document.querySelectorAll('input[type="checkbox"]:checked');
 	var params = [];
-
+	var value = false;
+	
 	[].map.call(inputs, function (input) {
-		params.push(input.id);
+		if(input.id) {
+			var min = $(input).parents('li').find('.extra input');
+			if(min.length) {
+				value = min.is(':checked');
+				params.push({component : input.id, minified : value});
+			} else {
+				params.push(input.id);
+			}
+		}
 	});
 
 	$.ajax({

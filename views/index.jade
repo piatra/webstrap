@@ -7,34 +7,57 @@ block content
 		p Webstrap is a tool that allows you to get all the components you need for your next project in just one place
 		
 	.extend-y
-		h2 About
+			.btn-group
+				.btn: a(href='https://github.com/piatra/webstrap') github 
+				.btn.btn-info: a(href='https://twitter.com/an_rei') twitter 
 
 	.container
 		.row
 			.span4
 				ul
-					h3	Components
+					h3	HTML
 					li
 						input(type='checkbox', id='h5bp', checked)
 						label(for='h5bp') HTML5 Boilerplate
+							span(class='label label-info') 4.0.0
+			.span4
+				ul
+					h3 CSS
 					li
 						input(type='checkbox', id='bootstrap')
 						label(for='bootstrap') Twitter Bootstrap
 							span(class='label label-info') 2.1.0
+						p
+							input(type='checkbox', id='bootstrap-responsive')
+							| Bootstrap responsive
+						.extra.label.label-success
+							input(type='checkbox')
+							| min ?
+			.span4
+				ul
+					h3 Javascript
 					li
 						input(type='checkbox', id='jquery')
 						label(for='jquery') jQuery
 							span(class='label label-info') 1.8.0
+						.extra.label.label-success
+							input(type='checkbox', checked)
+							| min ?
 					li
 						input(type='checkbox', id='requirejs')
 						label(for='requirejs') RequireJS
 							span(class='label label-info') 2.0.6
+						.extra.label.label-success
+							input(type='checkbox', checked)
+							| min ?
 					li
 						input(type='checkbox', id='backbone')
 						label(for='backbone') Backbone
-			.span8
-				h3 Description
-				#description
+							span(class='label label-info') 0.9.2
+						.extra.label.label-success
+							input(type='checkbox', checked)
+							| min ?
+
 
 		.row
 			.span12
