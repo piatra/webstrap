@@ -15,6 +15,8 @@ var express = require('express')
 		, 'backbone' : 'http://backbonejs.org/backbone-min.js'
 		, 'glyphicons-halflings' : 'http://localhost:3000/request/glyphicons-halflings.png'
 		, 'glyphicons-halflings-white' : 'http://localhost:3000/request/glyphicons-halflings-white.png'
+		, 'modernizr' : 'http://localhost:3000/request/modernizr-2.6.1.min.js'
+		, 'start' : 'http://localhost:3000/request/start.sh'
 	}
 	, fNames = {
 		  'h5bp' : 'index.html'
@@ -24,6 +26,8 @@ var express = require('express')
 		, 'backbone' : '/js/libs/backbone-min.js'
 		, 'glyphicons-halflings' : '/imgs/glyphicons-halflings.png'
 		, 'glyphicons-halflings-white' : '/imgs/glyphicons-halflings-white.png'
+		, 'modernizr' : '/js/libs/modernizr-2.6.1.min.js'
+		, 'start' : 'start.sh'
 	} 
 	, request = require('request')
 	, zip = require('node-native-zip')
@@ -58,10 +62,12 @@ app.post('/download', function (req, res) {
 	var params = JSON.parse(req.body.params);
 	params.push('glyphicons-halflings');
 	params.push('glyphicons-halflings-white');
+	params.push('modernizr');
+	params.push('start');
 	
 	var archive = new zip();
 
-	archive.add('/js/scripts.js', new Buffer('// scripts.js'));
+	archive.add('/js/script.js', new Buffer('// script.js'));
 	archive.add('/js/plugins.js', new Buffer('// plugins.js'));
 	archive.add('/css/style.css', new Buffer('// style.css'));
 	
@@ -74,12 +80,20 @@ app.post('/download', function (req, res) {
 					$ = cheerio.load(body);
 					if(params.indexOf('bootstrap') > -1) {
 						$('bootstrap').replaceWith('<link rel="stylesheet" href="css/bootstrap.css">')
+						var content = '<div class="container"><div class="hero-unit"><h1>Hello from Webstrap</h1></div></div>'
+						$('div').replaceWith(content);
+					} else {
+						$('bootstrap').remove();
 					}
 					if(params.indexOf('requirejs') > -1) {
 						$('requirejs').replaceWith('<script src="js/libs/require.js"></script>')
+					} else {
+						$('requirejs').remove();
 					}
 					if(params.indexOf('backbone') > -1) {
 						$('backbone').replaceWith('<script src="js/libs/backbone-min.js"></script>')
+					} else {
+						$('backbone').remove();
 					}
 					body = $.html();
 				}
