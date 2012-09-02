@@ -10,8 +10,8 @@ var express = require('express')
 	, fPaths = {
 		  'h5bp' : 'http://localhost:3000/request/index.html'
 		, 'jquery' : {
-			min : 'http://code.jquery.com/jquery-latest.min.js',
-			dev : 'http://code.jquery.com/jquery-latest.js'
+			min : 'http://code.jquery.com/jquery-1.8.1.min.js',
+			dev : 'http://code.jquery.com/jquery-1.8.1.js'
 		}
 		, 'bootstrap' : {
 			min : 'http://localhost:3000/request/bootstrap.min.css',
@@ -128,16 +128,14 @@ app.post('/download', function (req, res) {
 						$('requirejs').remove();
 					}
 					if(findInObjs(params, 'backbone')) {
-						console.log('replaceing backbone');
 						$('backbone').replaceWith('<script src="js/libs/backbone.js"></script>')
-						console.log($.html());
 					} else {
 						$('backbone').remove();
 					}
 					body = $.html();
 				}
 				param = (param.component) ? param.component : param;
-				console.log(fNames[param], param);
+				
 				archive.add(fNames[param], new Buffer(body));
 				if(--length == 0) {
 					res.attachment('webstrap.zip');
