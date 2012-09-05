@@ -50,7 +50,8 @@ var express = require('express')
 		, 'start' : '/start.sh'
 		, 'script.js' : '/js/script.js'
 		, 'plugins.js' : '/js/plugins.js'
-		, 'main.css' : '/css/main.css' 
+		, 'main.css' : '/css/main.css'
+		, 'normalize' : '/css/normalize.css'
 	} 
 	, request = require('request')
 	, zip = require('node-native-zip')
@@ -76,12 +77,9 @@ app.configure('development', function(){
 	app.use(express.errorHandler());
 });
 
-var findInObjs = function (arr, t) {
-	var value = false;
-	arr.map(function(a){
-		if(a.component === t) value = true;
-	})
-	return value;
+var findInObjs = function (ps, t) {
+	var r = ps.filter(function (p) { return p.component === t });
+	return r.length;
 }
 
 app.get('/', routes.index);
@@ -98,21 +96,15 @@ app.post('/download', function (req, res) {
 			fNames[j] = fNames[j].replace('/'+i, '/' + folderStructure[i]);
 		}
 	}
-	console.log(fNames);
-	
-	params.push('glyphicons-halflings');
-	params.push('glyphicons-halflings-white');
-	params.push('modernizr');
-	params.push('start');
-	params.push('script.js');
-	params.push('plugins.js');
-	params.push('main.css');
-	
+	['glyphicons-halflings', 'glyphicons-halflings-white', 'modernizr', 'start', 'script.js', 'plugins.js', 'main.css'].forEach(function (entry) {
+		params.push(entry);
+	});
+
 	var archive = new zip();
 	var length = params.length;
+	var location;
 
 	[].forEach.call(params, function(param) {
-		var location;
 		if(typeof param !== 'string') {
 			if(param.minified) {
 				location = fPaths[param.component].min;
@@ -128,22 +120,29 @@ app.post('/download', function (req, res) {
 				if(param === 'h5bp') {
 					$ = cheerio.load(body);
 					if(findInObjs(params, 'bootstrap')) {
-						$('bootstrap').replaceWith('<link rel="stylesheet" href="css/bootstrap.css">')
+						var bootcss = '<link rel="stylesheet" href="'+fNames['bootstrap']+'"><link rel="stylesheet" href="'+fNames['bootstrap-responsive']+'">'
 						var content = '<div class="container"><div class="hero-unit"><h1>Hello from Webstrap</h1></div></div>'
+						$('bootstrap').replaceWith(bootcss);
 						$('div').replaceWith(content);
 					} else {
-						$('bootstrap').replaceWith('<link rel="stylesheet" href="css/normalize.css">');
+						$('bootstrap').replaceWith('<link rel="stylesheet" href="'+fNames['normalize']+'">');
 					}
 					if(findInObjs(params, 'requirejs')) {
-						$('requirejs').replaceWith('<script src="js/libs/require.js"></script>')
+						$('requirejs').replaceWith('<script src="'+fNames['requirejs']+'"></script>')
 					} else {
 						$('requirejs').remove();
 					}
 					if(findInObjs(params, 'backbone')) {
-						$('backbone').replaceWith('<script src="js/libs/backbone.js"></script>')
+						$('backbone').replaceWith('<script src="'+fNames['backbone']+'"></script>')
 					} else {
 						$('backbone').remove();
 					}
+					$('genericscripts')
+						.replaceWith('<script src="'+fNames['script.js']+'"></script><script src="'+fNames['plugins.js']+'"></script>');
+					$('maincss')
+						.replaceWith('<link rel="stylesheet" href="'+fNames['main.css']+'">');
+					$('modernizr')
+						.replaceWith('<script src="'+fNames['modernizr']+'"></script>');
 					body = $.html();
 				}
 				param = (param.component) ? param.component : param;

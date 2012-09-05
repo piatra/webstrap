@@ -1,6 +1,6 @@
 {
   "name": "webstrap",
-  "version": "0.0.1-6",
+  "version": "0.0.1-10",
   "private": true,
   "scripts": {
     "start": "app.js"
