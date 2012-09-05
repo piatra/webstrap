@@ -22,7 +22,6 @@ label
 		padding: 0
 	ul li 
 		list-style: none
-		width: 280px
 		background: #eee
 		padding: 5px
 		margin: 5px
@@ -33,6 +32,13 @@ label
 		&:hover, label:hover
 			background: #ddd
 			cursor: pointer
+		ul li:hover 
+			background #ccc
+		span[contentEditable]
+			display inline-block
+			width 60%
+		ul li:before
+			content '|-'
 	input[type='checkbox']
 		float: left
 		margin-right: .5em
@@ -46,3 +52,14 @@ label
 	right 0
 	border-radius 0 5px 0 0
 	display none
+
+.icon-github
+	width: 14px;
+	height: 15px;
+	margin -2px 4px 0 0;
+	vertical-align: middle;
+	background: url(../img/github-icons.png) no-repeat 0 0;
+
+.btn-primary.btn-large 
+	width 96%
+	font-size 40px

@@ -3,8 +3,17 @@ var download = document.querySelector('#download');
 var downloadWebstrap = function () {
 	
 	var inputs = document.querySelectorAll('input[type="checkbox"]:checked');
+	var folderStructure = document.querySelectorAll('span[contentEditable]');
+
 	var params = [];
 	var value = false;
+	var newStructure = {};
+
+	[].map.call(folderStructure, function (entry) {
+		if(entry.id !== entry.innerHTML.trim()) {
+			newStructure[entry.id] = entry.innerHTML.trim();
+		}
+	});
 	
 	[].map.call(inputs, function (input) {
 		if(input.id) {
@@ -23,7 +32,8 @@ var downloadWebstrap = function () {
 		, url : '/download'
 		, dataType : 'jsonpi'
 		, params : {
-			params : JSON.stringify(params)
+			params : JSON.stringify(params),
+			folderStructure : JSON.stringify(newStructure)
 		}
 	})
 }

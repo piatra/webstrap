@@ -22,7 +22,6 @@ label {
 }
 .container ul li {
   list-style: none;
-  width: 280px;
   background: #eee;
   padding: 5px;
   margin: 5px;
@@ -36,6 +35,16 @@ label {
 .container ul li label:hover {
   background: #ddd;
   cursor: pointer;
+}
+.container ul li ul li:hover {
+  background: #ccc;
+}
+.container ul li span[contentEditable] {
+  display: inline-block;
+  width: 60%;
+}
+.container ul li ul li:before {
+  content: '|-';
 }
 .container input[type='checkbox'] {
   float: left;
@@ -54,4 +63,15 @@ label {
   right: 0;
   border-radius: 0 5px 0 0;
   display: none;
+}
+.icon-github {
+  width: 14px;
+  height: 15px;
+  margin: -2px 4px 0 0;
+  vertical-align: middle;
+  background: url("../img/github-icons.png") no-repeat 0 0;
+}
+.btn-primary.btn-large {
+  width: 96%;
+  font-size: 40px;
 }

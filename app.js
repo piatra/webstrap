@@ -33,9 +33,12 @@ var express = require('express')
 		, 'glyphicons-halflings-white' : 'http://localhost:3000/request/glyphicons-halflings-white.png'
 		, 'modernizr' : 'http://localhost:3000/request/modernizr-2.6.1.min.js'
 		, 'start' : 'http://localhost:3000/request/start.sh'
+		, 'script.js' : 'http://localhost:3000/request/script.js'
+		, 'plugins.js' : 'http://localhost:3000/request/plugins.js'
+		, 'main.css' : 'http://localhost:3000/request/main.css'
 	}
 	, fNames = {
-		  'h5bp' : 'index.html'
+		  'h5bp' : '/index.html'
 		, 'jquery' : '/js/vendor/jquery.js'
 		, 'bootstrap' : '/css/bootstrap.css'
 		, 'bootstrap-responsive' : '/css/bootstrap-responsive.css'
@@ -44,7 +47,10 @@ var express = require('express')
 		, 'glyphicons-halflings' : '/imgs/glyphicons-halflings.png'
 		, 'glyphicons-halflings-white' : '/imgs/glyphicons-halflings-white.png'
 		, 'modernizr' : '/js/vendor/modernizr-2.6.1.js'
-		, 'start' : 'start.sh'
+		, 'start' : '/start.sh'
+		, 'script.js' : '/js/script.js'
+		, 'plugins.js' : '/js/plugins.js'
+		, 'main.css' : '/css/main.css' 
 	} 
 	, request = require('request')
 	, zip = require('node-native-zip')
@@ -74,7 +80,6 @@ var findInObjs = function (arr, t) {
 	var value = false;
 	arr.map(function(a){
 		if(a.component === t) value = true;
-		else console.log(a.component, '!==', t);
 	})
 	return value;
 }
@@ -86,17 +91,24 @@ app.get('/request/:filename', routes.request);
 app.post('/download', function (req, res) {
 	
 	var params = JSON.parse(req.body.params);
+	var folderStructure = JSON.parse(req.body.folderStructure);
+
+	for(var i in folderStructure) {
+		for(var j in fNames) {
+			fNames[j] = fNames[j].replace('/'+i, '/' + folderStructure[i]);
+		}
+	}
+	console.log(fNames);
+	
 	params.push('glyphicons-halflings');
 	params.push('glyphicons-halflings-white');
 	params.push('modernizr');
 	params.push('start');
+	params.push('script.js');
+	params.push('plugins.js');
+	params.push('main.css');
 	
 	var archive = new zip();
-
-	archive.add('/js/script.js', new Buffer('// script.js'));
-	archive.add('/js/plugins.js', new Buffer('// plugins.js'));
-	archive.add('/css/main.css', new Buffer('// style.css'));
-	
 	var length = params.length;
 
 	[].forEach.call(params, function(param) {

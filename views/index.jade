@@ -8,19 +8,21 @@ block content
 		
 	.extend-y
 			.btn-group
-				.btn: a(href='https://github.com/piatra/webstrap') github 
+				.btn: a(href='https://github.com/piatra/webstrap')
+					span(class='icon-github')
+					| github 
 				.btn.btn-info: a(href='https://twitter.com/an_rei') twitter 
 
 	.container
 		.row
-			.span4
+			.span3
 				ul
 					h3	HTML
 					li
-						input(type='checkbox', id='h5bp', checked)
+						input(type='checkbox', id='h5bp', checked, disabled)
 						label(for='h5bp') HTML5 Boilerplate
 							span(class='label label-info') 4.0.0
-			.span4
+			.span3
 				ul
 					h3 CSS
 					li
@@ -33,7 +35,7 @@ block content
 						.extra.label.label-success
 							input(type='checkbox')
 							| min ?
-			.span4
+			.span3
 				ul
 					h3 Javascript
 					li
@@ -57,13 +59,39 @@ block content
 						.extra.label.label-success
 							input(type='checkbox', checked)
 							| min ?
-
+			.span3
+				h3 Folder Structure
+				small: em edit folder structure
+				ul
+					li
+						i(class='icon-folder-open') 
+						span(id="js", contentEditable) js
+						ul
+							li
+								i(class='icon-folder-open')
+								span(id="vendor", contentEditable) vendor
+							li
+								i(class='icon-file')
+								span(id="script.js", contentEditable) script.js
+							li
+								i(class='icon-file')
+								span(id="plugins.js", contentEditable) plugins.js
+					li 
+						i(class='icon-folder-open') 
+						span(id="imgs", contentEditable) imgs
+					li
+						i(class='icon-folder-open') 
+						span(id="css", contentEditable) css
+					li
+						i(class='icon-file') 
+						span(id="index.html", contentEditable) index.html
+					li
+						i(class='icon-file') 
+						span(id="start.sh", contentEditable) start.sh
 
 		.row
 			.span12
-				#download.btn.btn-primary.btn-large
-					i(class='icon-download icon-white')
-					| Download
+				#download.btn.btn-primary.btn-large Download
 		.row
 			.span12
 				p.pull-right Inspired by 
