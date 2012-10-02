@@ -4,14 +4,17 @@
 	text-shadow 0 2px 0 #111
 	border-radius 0
 	margin-bottom 0
+	h1
+		color #F16529
 
 .btn-info a
 	color #fff
 
 label
-	width: auto
+	letter-spacing 1px
+	font-size 15px
 
-.extend-y
+.social
 	background #f5f5f5
 	padding 5px
 	text-align center
@@ -22,18 +25,18 @@ label
 		padding: 0
 	ul li 
 		list-style: none
-		background: #eee
-		padding: 5px
-		margin: 5px
-		border-radius: 5px
+		padding: 10px
+		margin: 0
 		position relative
+		border-bottom 3px solid #fff
 		.label
 			margin-left 5px
 		&:hover, label:hover
-			background: #ddd
-			cursor: pointer
-		ul li:hover 
-			background #ccc
+			background #F16529
+			cursor pointer
+			color #fff
+		&:hover
+			border-bottom 3px solid #D45924
 		span[contentEditable]
 			display inline-block
 			width 60%
@@ -42,17 +45,23 @@ label
 	input[type='checkbox']
 		float: left
 		margin-right: .5em
-		~ p 
-			display none
-		&:checked ~ p, &:checked ~ .extra
+		&:checked ~ .hide
 			display block
+		&:checked ~ label span
+			display none
+
+ul.folder-structure
+	li
+		border none
+		&:hover
+			color #1b1b1b
+			background none
+			border none
 .extra
 	position absolute
 	top 0
 	right 0
-	border-radius 0 5px 0 0
-	display none
-
+	border-radius 5px
 .icon-github
 	width: 14px;
 	height: 15px;
@@ -60,6 +69,6 @@ label
 	vertical-align: middle;
 	background: url(../img/github-icons.png) no-repeat 0 0;
 
-.btn-primary.btn-large 
+.btn-large 
 	width 96%
 	font-size 40px

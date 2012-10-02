@@ -5,13 +5,17 @@
   border-radius: 0;
   margin-bottom: 0;
 }
+.hero-unit h1 {
+  color: #f16529;
+}
 .btn-info a {
   color: #fff;
 }
 label {
-  width: auto;
+  letter-spacing: 1px;
+  font-size: 15px;
 }
-.extend-y {
+.social {
   background: #f5f5f5;
   padding: 5px;
   text-align: center;
@@ -22,22 +26,22 @@ label {
 }
 .container ul li {
   list-style: none;
-  background: #eee;
-  padding: 5px;
-  margin: 5px;
-  border-radius: 5px;
+  padding: 10px;
+  margin: 0;
   position: relative;
+  border-bottom: 3px solid #fff;
 }
 .container ul li .label {
   margin-left: 5px;
 }
 .container ul li:hover,
 .container ul li label:hover {
-  background: #ddd;
+  background: #f16529;
   cursor: pointer;
+  color: #fff;
 }
-.container ul li ul li:hover {
-  background: #ccc;
+.container ul li:hover {
+  border-bottom: 3px solid #d45924;
 }
 .container ul li span[contentEditable] {
   display: inline-block;
@@ -50,19 +54,25 @@ label {
   float: left;
   margin-right: 0.5em;
 }
-.container input[type='checkbox'] ~ p {
+.container input[type='checkbox']:checked ~ .hide {
+  display: block;
+}
+.container input[type='checkbox']:checked ~ label span {
   display: none;
 }
-.container input[type='checkbox']:checked ~ p,
-.container input[type='checkbox']:checked ~ .extra {
-  display: block;
+ul.folder-structure li {
+  border: none;
+}
+ul.folder-structure li:hover {
+  color: #1b1b1b;
+  background: none;
+  border: none;
 }
 .extra {
   position: absolute;
   top: 0;
   right: 0;
-  border-radius: 0 5px 0 0;
-  display: none;
+  border-radius: 5px;
 }
 .icon-github {
   width: 14px;
@@ -71,7 +81,7 @@ label {
   vertical-align: middle;
   background: url("../img/github-icons.png") no-repeat 0 0;
 }
-.btn-primary.btn-large {
+.btn-large {
   width: 96%;
   font-size: 40px;
 }
