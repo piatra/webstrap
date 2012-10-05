@@ -43,24 +43,24 @@ var express = require('express')
 		, 'normalize' : 'http://localhost:3000/request/normalize.css'
 	}
 	, fNames = {
-		  'h5bp' : '/index.html'
-		, 'jquery' : '/js/vendor/jquery.js'
-		, 'bootstrap' : '/css/bootstrap.css'
-		, 'bootstrap-responsive' : '/css/bootstrap-responsive.css'
-		, 'requirejs' : '/js/libs/require.js'
-		, 'backbone' : '/js/libs/backbone.js'
-		, 'glyphicons-halflings' : '/imgs/glyphicons-halflings.png'
-		, 'glyphicons-halflings-white' : '/imgs/glyphicons-halflings-white.png'
-		, 'modernizr' : '/js/vendor/modernizr-2.6.1.js'
-		, 'start' : '/start.sh'
-		, 'script.js' : '/js/script.js'
-		, 'plugins.js' : '/js/plugins.js'
-		, 'main.css' : '/css/main.css'
-		, 'normalize' : '/css/normalize.css'
-		, '404.html' : '/404.html'
-		, 'robots.txt' : '/robots.txt'
-		, 'humans.txt' : '/humans.txt'
-		, 'main.js' : '/js/main.js'
+		  'h5bp' : 'index.html'
+		, 'jquery' : 'js/vendor/jquery.js'
+		, 'bootstrap' : 'css/bootstrap.css'
+		, 'bootstrap-responsive' : 'css/bootstrap-responsive.css'
+		, 'requirejs' : 'js/libs/require.js'
+		, 'backbone' : 'js/libs/backbone.js'
+		, 'glyphicons-halflings' : 'imgs/glyphicons-halflings.png'
+		, 'glyphicons-halflings-white' : 'imgs/glyphicons-halflings-white.png'
+		, 'modernizr' : 'js/vendor/modernizr-2.6.1.js'
+		, 'start' : 'start.sh'
+		, 'script.js' : 'js/script.js'
+		, 'plugins.js' : 'js/plugins.js'
+		, 'main.css' : 'css/main.css'
+		, 'normalize' : 'css/normalize.css'
+		, '404.html' : '404.html'
+		, 'robots.txt' : 'robots.txt'
+		, 'humans.txt' : 'humans.txt'
+		, 'main.js' : 'js/main.js'
 	} 
 	, request = require('request')
 	, zip = require('node-native-zip')
@@ -150,12 +150,17 @@ app.post('/download', function (req, res) {
 					$ = cheerio.load(body);
 					
 					if(findInObjs(params, 'bootstrap')) {
-						var bootcss = '<link rel="stylesheet" href="'+fNames['bootstrap']+'"><link rel="stylesheet" href="'+fNames['bootstrap-responsive']+'">';
+						var bootcss = '<link rel="stylesheet" href="'+fNames['bootstrap']+'">';
 						var content = '<div class="container"><div class="hero-unit"><h1>Hello from Webstrap</h1></div></div>';
 						$('bootstrap').replaceWith(bootcss);
-						$('div').replaceWith(content);
+						$('p').replaceWith(content);
 					} else {
 						$('bootstrap').replaceWith('<link rel="stylesheet" href="'+fNames['normalize']+'">');
+					}
+					if(findInObjs(params, 'bootstrap-responsive')) {
+						$('bootstrap-responsive').replaceWith('<link rel="stylesheet" href="'+fNames['bootstrap-responsive']+'">');
+					} else {
+						$('bootstrap-responsive').remove();
 					}
 					if(findInObjs(params, 'requirejs')) {
 						$('requirejs').replaceWith('<script data-main="'+fNames['main.js']+'" src="'+fNames['requirejs']+'"></script>');

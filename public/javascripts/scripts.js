@@ -5,6 +5,7 @@ var downloadWebstrap = function () {
 	var inputs = document.querySelectorAll('input[type="checkbox"]:checked');
 	var folderStructure = document.querySelectorAll('span[contentEditable]');
 
+
 	var params = [];
 	var value = false;
 	var newStructure = {};
@@ -26,7 +27,7 @@ var downloadWebstrap = function () {
 			}
 		}
 	});
-
+	console.log(params);
 	$.ajax({
 		  type: 'POST'
 		, url : '/download'
@@ -35,7 +36,7 @@ var downloadWebstrap = function () {
 			params : JSON.stringify(params),
 			folderStructure : JSON.stringify(newStructure)
 		}
-	})
-}
+	});
+};
 
 download.addEventListener('click', downloadWebstrap, false);
