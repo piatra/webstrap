@@ -1,4 +1,16 @@
+'use strict';
+
 var download = document.querySelector('#download');
+var fileInputs = document.querySelectorAll('span[contentEditable]');
+
+[].forEach.call(fileInputs, function(input){
+	input.addEventListener('keydown', function(e) {
+		if(e.keyCode === 13) {
+			e.preventDefault();
+			return false;
+		}
+	}, false);
+});
 
 var downloadWebstrap = function () {
 	
@@ -12,7 +24,10 @@ var downloadWebstrap = function () {
 
 	[].map.call(folderStructure, function (entry) {
 		if(entry.id !== entry.innerHTML.trim()) {
-			newStructure[entry.id] = entry.innerHTML.trim();
+			var value = entry.innerHTML.trim();
+			value = value.replace('<br>', '');
+			console.log(value);
+			newStructure[entry.id] = value
 		}
 	});
 	
@@ -27,16 +42,16 @@ var downloadWebstrap = function () {
 			}
 		}
 	});
-	console.log(params);
-	$.ajax({
-		  type: 'POST'
-		, url : '/download'
-		, dataType : 'jsonpi'
-		, params : {
-			params : JSON.stringify(params),
-			folderStructure : JSON.stringify(newStructure)
-		}
-	});
+
+	// $.ajax({
+	// 	  type: 'POST'
+	// 	, url : '/download'
+	// 	, dataType : 'jsonpi'
+	// 	, params : {
+	// 		params : JSON.stringify(params),
+	// 		folderStructure : JSON.stringify(newStructure)
+	// 	}
+	// });
 };
 
 download.addEventListener('click', downloadWebstrap, false);

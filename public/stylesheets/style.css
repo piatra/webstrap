@@ -82,6 +82,17 @@ ul.folder-structure li:hover {
   background: url("../img/github-icons.png") no-repeat 0 0;
 }
 .btn-large {
-  width: 96%;
+  width: 97%;
   font-size: 40px;
+}
+.about {
+  margin-top: 100px;
+  background: #ddd;
+  box-shadow: inset 0 10px 10px #ccc;
+}
+.spacing30 {
+  margin-top: 30px;
+}
+.spacing20 {
+  margin-top: 10px;
 }

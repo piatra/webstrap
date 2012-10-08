@@ -2,9 +2,10 @@ extends layout
 
 block content
 	.hero-unit
-		h1 HTML5 #{title}
-		p Is here to help you get started with new HTML5 projects
-		p It's an attempt to bring features from yeoman.io to the browser
+		.container
+			h1 HTML5 #{title}
+			p Is here to help you get started with new HTML5 projects
+			p It's an attempt to bring features from yeoman.io to the browser
 		
 	.row-fluid
 		.span12.social
@@ -15,7 +16,7 @@ block content
 				.btn.btn-info: a(href='https://twitter.com/an_rei') twitter 
 
 	.container
-		.row-fluid
+		.row-fluid.spacing30
 			.span3
 				ul
 					h3	HTML
@@ -76,9 +77,9 @@ block content
 						.hide.extra.label.label-success
 							input(type='checkbox', checked)
 							| min ?
-			.span3
+			.span3.well
 				h3 Folder Structure
-				small.label.label-info: em edit folder structure
+				//small.label.label-info: em edit folder structure
 				ul.folder-structure
 					li
 						i(class='icon-folder-open') 
@@ -109,16 +110,15 @@ block content
 					li
 						i(class='icon-file') 
 						span(id="start.sh", contentEditable) start.sh
-		.row-fluid
-			.span6
-				#download.btn.btn-primary.btn-large Download
-			.span6
-				#download.btn.btn-info.btn-large What's inside ?
-		.row-fluid
+		.row-fluid.spacing20
 			.span12
-				p.pull-right Inspired by 
-					a(href='http://yeoman.io/'): em yeoman.io 
-					| and 
-					a(href='http://twitter.github.com/bootstrap/') Twitter Bootstrap 
-					| built with 
-					a(href='nodejs.org') nodejs
+				#download.btn.btn-primary.btn-large Download
+
+	.row-fluid12.about
+		.container
+			h2 About
+			
+			p Webstrap is an attempt to bring <code>$ yeoman init</code> command to the browser. I found it to be very useful and I wanted to make it available for people that are not familiar with nodejs or the terminal.
+			p
+				a(href='yeoman.io') Yeoman 
+				| is a robust and opinionated set of tools, libraries, and a workflow that can help developers quickly build beautiful, compelling web apps.
