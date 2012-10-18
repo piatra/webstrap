@@ -4,7 +4,9 @@ block content
 	.hero-unit
 		.container
 			h1 HTML5 #{title}
-			p Is here to help you get started with new HTML5 projects
+			p 
+				| Is here to help you get started with new HTML5 projects fast 
+				span(class='icon-bolt bolt')
 			p It's an attempt to bring features from yeoman.io to the browser
 		
 	.row-fluid
@@ -13,7 +15,9 @@ block content
 				.btn: a(href='https://github.com/piatra/webstrap')
 					span(class='icon-github')
 					| github 
-				.btn.btn-info: a(href='https://twitter.com/an_rei') twitter 
+				.btn.btn-info: a(href='https://twitter.com/an_rei') 
+					span(class='icon-twitter')
+					| twitter 
 
 	.container
 		.row-fluid.spacing30
@@ -52,7 +56,7 @@ block content
 						label(for='bootstrap-responsive') Bootstrap responsive
 						.hide.extra.label.label-success
 							input(type='checkbox')
-							| min ?	
+							| min ?
 			.span3
 				ul
 					h3 Javascript
@@ -113,8 +117,15 @@ block content
 		.row-fluid.spacing20
 			.span12
 				#download.btn.btn-primary.btn-large Download
-
-	.row-fluid12.about
+	.row-fluid12.spacing30.tools
+		.container
+			ul.span6
+				h3 Minify CSS
+				li
+					input(type='file', id='minify')
+			ul.span6
+				h3 Javascript
+	.row-fluid12.about.top-shadow
 		.container
 			h2 About
 			

@@ -10,6 +10,9 @@ var express = require('express')
 	, zip = require('node-native-zip')
 	, cheerio = require('cheerio')
 	, app = express()
+	, less = require('less')
+	, parser = new(less.Parser)
+	, formidable = require('formidable')
 	;
 
 app.configure(function(){
@@ -38,6 +41,13 @@ var findInObjs = function (ps, t) {
 app.get('/', routes.index);
 
 app.get('/request/:filename', routes.request);
+
+app.post('/css', function (req, res){
+	var css = req.body.css;
+	parser.parse(css, function (e, tree) {
+		res.end(tree.toCSS({ compress: true }));
+	});
+});
 
 app.post('/download', function (req, res) {
 	
@@ -89,6 +99,9 @@ app.post('/download', function (req, res) {
 		// request and download all the files
 		request(location, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
+				if(param === 'main.js') {
+					body = body.replace('/js/script.js', '/js/' + folderStructure['script.js']);
+				}
 				if(param === 'h5bp') {
 					var $ = cheerio.load(body);
 					
