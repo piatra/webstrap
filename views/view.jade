@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	.hero-unit
+		.container
+			h1!= title
+			p 
+				what people usually download
+	.container	
+		table.table.table-hover.table-striped
+			for data in content
+				tr
+					td!=data.data
+					td!=data.time
+
+	script(src='/javascripts/view.js')

@@ -13,6 +13,7 @@ var fileUpload = document.querySelector('#minify');
 	}, false);
 });
 
+
 var createModal = function (css, min, name) {
 	var modal = $('<div>').addClass('modal').appendTo('body');
 	var blob = new Blob([min], {type: 'text/css'});
@@ -64,7 +65,7 @@ var downloadWebstrap = function () {
 			var value = entry.innerHTML.trim();
 			value = value.replace('<br>', '');
 			console.log(value);
-			newStructure[entry.id] = value
+			newStructure[entry.id] = value;
 		}
 	});
 	

@@ -1,6 +1,6 @@
 {
   "name": "webstrap",
-  "version": "0.0.1-14",
+  "version": "0.0.1-18",
   "private": true,
   "scripts": {
     "start": "app.js"
@@ -11,7 +11,9 @@
     "stylus": "*",
     "node-native-zip": "*",
     "request": "*",
-    "cheerio": "0.9.x"
+    "cheerio": "0.9.x",
+    "less": "1.3.x",
+    "mongoose": "3.3.x"
   },
   "subdomain": "webstrap",
   "engines": {

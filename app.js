@@ -12,7 +12,8 @@ var express = require('express')
 	, app = express()
 	, less = require('less')
 	, parser = new(less.Parser)
-	, formidable = require('formidable')
+	, mongoose = require('mongoose')
+	, db = mongoose.connect('mongodb://nodejitsu:e86c5d1131b4f91219486db17079d9b9@alex.mongohq.com:10017/nodejitsudb257527314150')
 	;
 
 app.configure(function(){
@@ -38,6 +39,40 @@ var findInObjs = function (ps, t) {
 	return r.length;
 };
 
+var record = function (data) {
+	var schema = mongoose.Schema({ data: 'string', date: {type: Date, default: Date.now} });
+	var Record = db.model('Record', schema);
+	var record = new Record({ data: data });
+	record.save(function (err) {
+		if (err) {
+			console.log(err);
+		}
+	});
+};
+
+app.get('/view', function(req, res){
+	console.log('/view');
+	var schema = mongoose.Schema({ data: 'string', date: {type: Date, default: Date.now} });
+	var Record = db.model('Record', schema);
+	Record.find(function (err, docs) {
+		if(!err) {
+			console.log('no error', docs);
+			var l = docs.length;
+			var content = [];
+			docs.forEach(function(doc){
+				content.push({'data' : doc.data, 'time' : doc.date});
+				console.log('pushing');
+				if(--l === 0) {
+					res.render('view', {
+						content: content,
+						title: 'Typical Usage'
+					});
+				}
+			});
+		}
+	});
+});
+
 app.get('/', routes.index);
 
 app.get('/request/:filename', routes.request);
@@ -52,14 +87,21 @@ app.post('/css', function (req, res){
 app.post('/download', function (req, res) {
 	
 	var params = JSON.parse(req.body.params);
+	record(req.body.params);
 	var folderStructure = JSON.parse(req.body.folderStructure);
 
 	// rename any files and folders if necesarry
 	for(var i in folderStructure) {
 		for(var j in fNames) {
-			fNames[j] = fNames[j].replace('/'+i, '/' + folderStructure[i]);
+			if(folderStructure[i].split('.').length > 1)
+				fNames[j] = fNames[j].replace('/'+i, '/' + folderStructure[i]);
+			else
+				fNames[j] = fNames[j].replace(i+'/', folderStructure[i]+'/');
 		}
 	}
+
+
+	console.log(fNames);
 
 	// standard files that get included
 	['modernizr', 'start', 'script.js', 'plugins.js', 'main.css'].forEach(function (entry) {
@@ -100,7 +142,8 @@ app.post('/download', function (req, res) {
 		request(location, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
 				if(param === 'main.js') {
-					body = body.replace('/js/script.js', '/js/' + folderStructure['script.js']);
+					var jspath = folderStructure['js'] || 'js';
+					body = body.replace('/js/script.js', '/'+jspath+'/' + folderStructure['script.js']);
 				}
 				if(param === 'h5bp') {
 					var $ = cheerio.load(body);
@@ -143,7 +186,6 @@ app.post('/download', function (req, res) {
 				}
 				param = (param.component) ? param.component : param;
 				var name = fNames[param] || param;
-				console.log(name);
 				archive.add(name, new Buffer(body));
 				
 				if(--length === 0) {
