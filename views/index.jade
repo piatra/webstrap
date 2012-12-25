@@ -121,9 +121,11 @@ block content
 			ul.span6
 				h3 Minify CSS
 				li
-					input(type='file', id='minify')
+					input(type='file', class='minify', data-file='css')
 			ul.span6
-				h3 Javascript
+				h3 Minify JS
+				li
+					input(type='file', class='minify', data-file='js')
 	.row-fluid12.about.top-shadow
 		.container
 			h2 About

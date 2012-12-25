@@ -13,7 +13,8 @@
     "request": "*",
     "cheerio": "0.9.x",
     "less": "1.3.x",
-    "mongoose": "3.3.x"
+    "mongoose": "3.3.x",
+    "uglify-js": "*"
   },
   "subdomain": "webstrap",
   "engines": {

@@ -11,6 +11,7 @@ var express = require('express')
 	, app = express()
 	, port = require('./lib/files').port
 	, less = require('less')
+	, UglifyJS = require("uglify-js")
 	, parser = new(less.Parser)
 	, mongoose = require('mongoose')
 	, db = mongoose.connect('mongodb://nodejitsu:e86c5d1131b4f91219486db17079d9b9@alex.mongohq.com:10017/nodejitsudb257527314150')
@@ -81,10 +82,18 @@ app.get('/', routes.index);
 app.get('/request/:filename', routes.request);
 
 app.post('/css', function (req, res){
-	var css = req.body.css;
+	var css = req.body.file;
 	parser.parse(css, function (e, tree) {
 		res.end(tree.toCSS({ compress: true }));
 	});
+});
+
+app.post('/js', function (req, res){
+	var js = req.body.file;
+	var result = UglifyJS.minify(js, {
+		fromString: true
+	});
+	res.end(result.code);
 });
 
 app.post('/download', function (req, res) {
