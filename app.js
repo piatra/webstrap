@@ -9,6 +9,7 @@ var express = require('express')
 	, zip = require('node-native-zip')
 	, cheerio = require('cheerio')
 	, app = express()
+	, port = require('./lib/files').port
 	, less = require('less')
 	, parser = new(less.Parser)
 	, mongoose = require('mongoose')
@@ -202,8 +203,6 @@ app.post('/download', function (req, res) {
 	});
 
 });
-
-var port = process.env.PORT || 3000;
 
 app.listen(port);
 console.log('Listening on port %d', port);
