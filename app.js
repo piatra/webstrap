@@ -2,7 +2,6 @@
 
 var express = require('express')
 	, routes = require('./routes')
-	, http = require('http')
 	, path = require('path')
 	, fPaths = require('./lib/files').paths
 	, fNames = require('./lib/files').names
@@ -46,6 +45,8 @@ var record = function (data) {
 	record.save(function (err) {
 		if (err) {
 			console.log(err);
+		} else {
+			console.log('saved', record);
 		}
 	});
 };
@@ -54,14 +55,12 @@ app.get('/view', function(req, res){
 	console.log('/view');
 	var schema = mongoose.Schema({ data: 'string', date: {type: Date, default: Date.now} });
 	var Record = db.model('Record', schema);
-	Record.find(function (err, docs) {
+	Record.find().sort('-date').limit(100).exec(function (err, docs) {
 		if(!err) {
-			console.log('no error', docs);
 			var l = docs.length;
 			var content = [];
 			docs.forEach(function(doc){
 				content.push({'data' : doc.data, 'time' : doc.date});
-				console.log('pushing');
 				if(--l === 0) {
 					res.render('view', {
 						content: content,
@@ -69,6 +68,9 @@ app.get('/view', function(req, res){
 					});
 				}
 			});
+		} else {
+			console.log(err);
+			res.end('Error:(');
 		}
 	});
 });
@@ -91,17 +93,17 @@ app.post('/download', function (req, res) {
 	var folderStructure = JSON.parse(req.body.folderStructure);
 
 	// rename any files and folders if necesarry
+	
 	for(var i in folderStructure) {
 		for(var j in fNames) {
+			if(!folderStructure[i].match('/'))
+				fNames[j] = fNames[j].replace(i, folderStructure[i]);
 			if(folderStructure[i].split('.').length > 1)
 				fNames[j] = fNames[j].replace('/'+i, '/' + folderStructure[i]);
 			else
 				fNames[j] = fNames[j].replace(i+'/', folderStructure[i]+'/');
 		}
 	}
-
-
-	console.log(fNames);
 
 	// standard files that get included
 	['modernizr', 'start', 'script.js', 'plugins.js', 'main.css'].forEach(function (entry) {
@@ -139,6 +141,7 @@ app.post('/download', function (req, res) {
 		}
 
 		// request and download all the files
+		console.log(location, params);
 		request(location, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
 				if(param === 'main.js') {
@@ -200,4 +203,7 @@ app.post('/download', function (req, res) {
 
 });
 
-http.createServer(app).listen(3000);
+var port = process.env.PORT || 3000;
+
+app.listen(port);
+console.log('Listening on port %d', port);

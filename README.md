@@ -6,4 +6,4 @@ It is inspired by yeoman.io and twitter bootstrap
 
 ## Try it out
 
-You can test it out at http://webstrap.jit.su
+You can test it out at http://webstrap.herokuapps.com
